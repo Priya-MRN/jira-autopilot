@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>JIRA AI Bridge — Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  {% include "_icons.html" %}
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">JB</div>
+      <div>
+        <h1>JIRA AI Bridge</h1>
+        <p class="tagline">Zero manual logging — your AI work, captured automatically.</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="client-badge client-{{ client_kind }}" title="Active JIRA backend">
+        {{ client_kind|upper }} mode
+      </span>
+      <button id="theme-toggle" class="icon-btn" title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+      </button>
+      <button id="sync-all" class="btn btn-primary">
+        <svg class="icon" aria-hidden="true"><use href="#i-refresh-cw"></use></svg>
+        <span class="btn-text">Sync all pending</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Summary stats -->
+    <section class="stats" id="stats" aria-label="Summary statistics">
+      <div class="stat-card">
+        <div class="stat-head">
+          <span class="stat-ico" aria-hidden="true"><svg class="icon"><use href="#i-calendar"></use></svg></span>
+          <span class="stat-label">Tasks today</span>
+        </div>
+        <span class="stat-value" id="stat-today">—</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-head">
+          <span class="stat-ico" aria-hidden="true"><svg class="icon"><use href="#i-trending-up"></use></svg></span>
+          <span class="stat-label">Tasks this week</span>
+        </div>
+        <span class="stat-value" id="stat-week">—</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-head">
+          <span class="stat-ico" aria-hidden="true"><svg class="icon"><use href="#i-square-check"></use></svg></span>
+          <span class="stat-label">Total tasks</span>
+        </div>
+        <span class="stat-value" id="stat-total">—</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-head">
+          <span class="stat-ico" aria-hidden="true"><svg class="icon"><use href="#i-clock"></use></svg></span>
+          <span class="stat-label">Time logged</span>
+        </div>
+        <span class="stat-value" id="stat-time">—</span>
+      </div>
+      <div class="stat-card accent-pending">
+        <div class="stat-head">
+          <span class="stat-ico" aria-hidden="true"><svg class="icon"><use href="#i-refresh-cw"></use></svg></span>
+          <span class="stat-label">Pending sync</span>
+        </div>
+        <span class="stat-value" id="stat-pending">—</span>
+      </div>
+    </section>
+
+    <!-- Breakdown -->
+    <section class="breakdown">
+      <div class="panel">
+        <h3>By source</h3>
+        <div id="by-source" class="chips"></div>
+      </div>
+      <div class="panel">
+        <h3>By project</h3>
+        <div id="by-project" class="chips"></div>
+      </div>
+    </section>
+
+    <!-- Filter toggle -->
+    <section class="toolbar">
+      <div class="segmented" id="range-toggle" role="tablist" aria-label="Filter events by time range">
+        <button class="seg active" data-range="today" role="tab" aria-selected="true">Today</button>
+        <button class="seg" data-range="week" role="tab" aria-selected="false">This week</button>
+        <button class="seg" data-range="all" role="tab" aria-selected="false">All</button>
+      </div>
+      <div class="toolbar-right">
+        <span class="refresh-dot" aria-hidden="true"></span>
+        <span id="refresh-note" class="muted">Auto-refresh on</span>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" class="timeline" aria-live="polite" aria-busy="true" aria-label="Work events timeline">
+      <div class="skeleton-card" aria-hidden="true"><div><div class="sk sk-title"></div><div class="sk sk-line sk-meta"></div></div><div class="sk sk-side"></div></div>
+      <div class="skeleton-card" aria-hidden="true"><div><div class="sk sk-title"></div><div class="sk sk-line sk-meta"></div></div><div class="sk sk-side"></div></div>
+      <div class="skeleton-card" aria-hidden="true"><div><div class="sk sk-title"></div><div class="sk sk-line sk-meta"></div></div><div class="sk sk-side"></div></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>JIRA AI Bridge · project <strong>{{ project_key }}</strong></span>
+    <span class="muted">CodeAlpha — Task Automation, elevated.</span>
+  </footer>
+
+  <script>
+    window.JIRA_BASE_URL = "{{ jira_base_url }}";
+    window.CLIENT_KIND = "{{ client_kind }}";
+  </script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
