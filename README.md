@@ -60,7 +60,7 @@ JIRA instance, copy `.env.example` to `.env` and fill in your credentials.
 ## 📁 Project Structure
 
 ```
-jira_ai_bridge/
+jira-autopilot/
 ├─ src/jira_bridge/
 │  ├─ core.py            # WorkEvent + BridgeEngine (persist, dedup, infer, sync)
 │  ├─ jira_client.py     # JiraClient ABC, RealJiraClient, MockJiraClient, get_client()

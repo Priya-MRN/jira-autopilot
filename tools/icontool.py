@@ -5,7 +5,7 @@ never hand-author SVG path data.** ``web/templates/_icons.html`` is GENERATED
 from the ``lucide`` PyPI package (a dev-only dependency, pinned in
 requirements.txt), which bundles the unmodified upstream lucide SVG files.
 The app itself never imports ``lucide`` at runtime — only this tool does.
-This mirrors the pattern already used by the sibling ``support_chatbot``
+This mirrors the pattern already used by the sibling ``support-navigator``
 project.
 
 Which icons get generated is *discovered from actual usage*, never
